@@ -42,7 +42,7 @@ afterEvaluate {
             register<MavenPublication>("release") {
                 groupId    = "com.github.BitCodeHub"
                 artifactId = "luniq-sdk-android"
-                version    = "1.0.0"
+                version    = "1.0.1"
                 from(components["release"])
                 pom {
                     name.set("Luna AI SDK")

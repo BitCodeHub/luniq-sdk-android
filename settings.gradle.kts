@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "luniq-sdk-android"
 include(":hpulse")
+include(":sample")

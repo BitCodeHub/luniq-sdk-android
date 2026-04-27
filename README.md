@@ -30,7 +30,7 @@ dependencies {
 Groovy DSL:
 
 ```groovy
-implementation 'com.github.BitCodeHub:luniq-sdk-android:1.0.0'
+implementation 'com.github.BitCodeHub:luniq-sdk-android:1.0.1'
 ```
 
 ## Initialize
