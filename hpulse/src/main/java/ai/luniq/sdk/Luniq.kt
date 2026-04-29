@@ -59,10 +59,26 @@ object Luniq {
             NetworkCapture.install(config.endpoint) { name, props -> track(name, props) }
         }
 
+        // In-app engagement runtime — fetches banners/guides/surveys and
+        // renders them inside the active Activity.  Registers its own
+        // lifecycle callback so it works regardless of [autoCapture].
+        Engage.configure(app, config.endpoint, config.apiKey, config.environment) { name, props ->
+            track(name, props)
+        }
+
         // Flush every 30s
         ioExec.scheduleWithFixedDelay({ flushNow() }, 30, 30, TimeUnit.SECONDS)
         track("app_open", emptyMap())
     }
+
+    /** Manually surface a fetched banner by id (mirrors web/iOS). */
+    @JvmStatic fun showBanner(id: String) = Engage.showBanner(id)
+
+    /** Manually surface a fetched guide by id. */
+    @JvmStatic fun showGuide(id: String) = Engage.showGuide(id)
+
+    /** Manually surface a fetched survey by id. */
+    @JvmStatic fun showSurvey(id: String) = Engage.showSurvey(id)
 
     @JvmStatic
     fun identify(visitorId: String? = null, accountId: String? = null, traits: Map<String, Any>? = null) {
