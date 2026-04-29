@@ -4,6 +4,32 @@ All notable changes to `com.github.BitCodeHub:luniq-sdk-android` are
 documented in this file. The project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] — 2026-04-29
+
+### Added
+- **In-app engage runtime** — native Kotlin renderers for banners,
+  guides, and surveys, matching the iOS + Web SDK feature set:
+  - `BannerRenderer` — sticky banner in the decor view (top or bottom)
+    with click + dismiss telemetry.
+  - `GuideRenderer` — multi-step `AlertDialog` walkthrough; emits
+    `$guide_shown`, `$guide_step`, `$guide_completed`, `$guide_dismissed`.
+  - `SurveyRenderer` — rating, single-choice, multi-choice, and
+    free-text survey questions with submission roundtrip.
+- `Engage` background scheduler — polls
+  `/v1/sdk/{banners,guides,surveys}` every 5 minutes via
+  `ScheduledExecutorService`, evaluates audience + trigger locally,
+  and renders matched content. Dismissals persisted per-id in
+  `SharedPreferences("luniq_engage_dismissed")`.
+- Public API: `Luniq.showBanner(id)`, `Luniq.showGuide(id)`,
+  `Luniq.showSurvey(id)` — `@JvmStatic` so callable from Java or
+  Kotlin.
+- Activity lifecycle integration via `ActivityLifecycleCallbacks` so
+  renderers always target the foreground activity.
+
+### Notes
+- No new dependencies. Uses `HttpURLConnection`, stock Android views,
+  and the existing `LuniqConfig` write-key.
+
 ## [1.0.1] — 2026-04-27
 
 ### Fixed
